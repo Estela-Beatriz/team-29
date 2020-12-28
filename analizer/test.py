@@ -13,8 +13,10 @@ if dropAll:
 
 
 s = """ 
-SELECT EXTRACT(DAY FROM TIMESTAMP '2001-02-16 20:38:40');
+USE test;
+SELECT rol from tbrol;
 """
 result = grammar.parse(s)
 print(result[0].execute(None))
+print(result[1].execute(None))
 # print(grammar.returnPostgreSQLErrors())

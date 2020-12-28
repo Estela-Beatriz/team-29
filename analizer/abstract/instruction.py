@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from analizer.abstract.expression import Expression
 from analizer.abstract import expression
+from analizer.expressions.tablle_all import TableAll
 from enum import Enum
 import sys
 
@@ -98,7 +99,7 @@ class Select(Instruction):
             if self.params:
                 params = []
                 for p in self.params:
-                    if isinstance(p, expression.TableAll):
+                    if isinstance(p, TableAll):
                         result = p.execute(newEnv)
                         for r in result:
                             params.append(r)
@@ -153,7 +154,7 @@ class Select(Instruction):
             else:
                 value = [newEnv.dataFrame[p] for p in newEnv.dataFrame]
                 labels = [p for p in newEnv.dataFrame]
-
+            print("pito")
             if value != []:
                 if self.wherecl == None:
                     df_ = newEnv.dataFrame.filter(labels)
