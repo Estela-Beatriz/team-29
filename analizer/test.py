@@ -13,11 +13,10 @@ if dropAll:
 
 
 s = """ 
---USE test;
---SELECT rol from tbrol;
-DELETE from tab1 where col1 = 3;
-INSERT INTO tab1 VALUES(1,2);
-UPDATE tab1 set col1 = 3 where 1 < 2;
+
+use test;
+
+select * from tb;
 """
 result = grammar.parse(s)
 print(result)
