@@ -1,5 +1,5 @@
 import math
-import analizer.functions.MathFunctions as mt
+import analizer.libs.MathFunctions as mt
 
 
 list_errors_tg = list()

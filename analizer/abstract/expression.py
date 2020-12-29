@@ -1,5 +1,8 @@
 from abc import abstractmethod
 from enum import Enum
+from analizer.libs import MathFunctions as mf
+from analizer.libs import TrigonometricFunctions as trf
+from analizer.libs import StringFunctions as strf
 
 
 class TYPE(Enum):
@@ -47,3 +50,14 @@ class Expression:
         """
         Metodo que servira para ejecutar las expresiones
         """
+
+
+def returnExpErrors():
+    global list_errors
+    mf.list_errors_mt += trf.list_errors_tg
+    mf.list_errors_mt += list_errors
+    list_ = mf.list_errors_mt
+    trf.list_errors_tg = list()
+    mf.list_errors_mt = list()
+    list_errors = list()
+    return list_
