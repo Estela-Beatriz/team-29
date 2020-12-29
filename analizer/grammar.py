@@ -115,7 +115,7 @@ def p_createbody(t):
 
 def p_createopts_table(t):
     """createOpts : R_TABLE ifNotExists idOrString S_PARIZQ createTableList S_PARDER inheritsOpt """
-    t[0] = instruction.CreateTable(t[2], t[3], t[7], t[5])
+    t[0] = instruction2.CreateTable(t[2], t[3], t[7], t[5])
     repGrammar.append(t.slice)
 
 
@@ -123,7 +123,7 @@ def p_createopts_db(t):
     """
     createOpts : orReplace R_DATABASE ifNotExists idOrString createOwner createMode
     """
-    t[0] = instruction.CreateDatabase(t[1], t[3], t[4], t[5], t[6])
+    t[0] = instruction2.CreateDataBase(t[1], t[3], t[4], t[5], t[6])
     repGrammar.append(t.slice)
 
 
@@ -1225,7 +1225,7 @@ def p_dropStmt(t):
     exists = True
     if t[3] == None:
         exists = False
-    t[0] = instruction.Drop(t[2], t[4], exists)
+    t[0] = instruction2.Drop(t[2], t[4], exists)
     repGrammar.append(t.slice)
 
 
@@ -1694,7 +1694,7 @@ def p_deleteStmt(t):
 
 def p_truncateStmt(t):
     """truncateStmt : R_TRUNCATE tableOpt ID"""
-    t[0] = instruction.Truncate(t[3])
+    t[0] = instruction2.Truncate(t[3])
     repGrammar.append(t.slice)
 
 
