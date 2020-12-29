@@ -43,7 +43,7 @@ precedence = (
 import analizer.abstract.expression as exp
 import analizer.modules.expressions as expression
 import analizer.abstract.instruction as instruction
-
+import analizer.modules.instructions as instruction2
 
 def p_init(t):
     """init : stmtList"""
@@ -115,7 +115,7 @@ def p_createbody(t):
 
 def p_createopts_table(t):
     """createOpts : R_TABLE ifNotExists idOrString S_PARIZQ createTableList S_PARDER inheritsOpt """
-    t[0] = instruction.CreateTable(t[2], t[3], t[7], t[5])
+    t[0] = instruction2.CreateTable(t[2], t[3], t[7], t[5])
     repGrammar.append(t.slice)
 
 
@@ -123,7 +123,7 @@ def p_createopts_db(t):
     """
     createOpts : orReplace R_DATABASE ifNotExists idOrString createOwner createMode
     """
-    t[0] = instruction.CreateDatabase(t[1], t[3], t[4], t[5], t[6])
+    t[0] = instruction2.CreateDataBase(t[1], t[3], t[4], t[5], t[6])
     repGrammar.append(t.slice)
 
 
@@ -1225,7 +1225,7 @@ def p_dropStmt(t):
     exists = True
     if t[3] == None:
         exists = False
-    t[0] = instruction.Drop(t[2], t[4], exists)
+    t[0] = instruction2.Drop(t[2], t[4], exists)
     repGrammar.append(t.slice)
 
 
@@ -1617,7 +1617,7 @@ def p_offsetLimit_n(t):
 def p_insertStmt(t):
     """insertStmt : R_INSERT R_INTO ID paramsColumn R_VALUES S_PARIZQ paramsList S_PARDER"""
 
-    t[0] = instruction.InsertInto(t[3], t[4], t[7])
+    t[0] = instruction2.InsertInto(t[3], t[4], t[7])
     repGrammar.append(t.slice)
 
 
@@ -1646,7 +1646,7 @@ def p_updateStmt(t):
     fc = instruction.FromClause(
         [t[2][0]], [t[2][1]], t.slice[1].lineno, t.slice[1].lexpos
     )
-    t[0] = instruction.Update(fc, t[4], t[5], t.slice[1].lineno, t.slice[1].lexpos)
+    t[0] = instruction2.Update(fc, t[4], t[5], t.slice[1].lineno, t.slice[1].lexpos)
 
     repGrammar.append(t.slice)
 
@@ -1688,13 +1688,13 @@ def p_updateExp(t):
 
 def p_deleteStmt(t):
     """deleteStmt : R_DELETE fromCl whereCl"""
-    t[0] = instruction.Delete(t[2], t[3], t.slice[1].lineno, t.slice[1].lexpos)
+    t[0] = instruction2.Delete(t[2], t[3], t.slice[1].lineno, t.slice[1].lexpos)
     repGrammar.append(t.slice)
 
 
 def p_truncateStmt(t):
     """truncateStmt : R_TRUNCATE tableOpt ID"""
-    t[0] = instruction.Truncate(t[3])
+    t[0] = instruction2.Truncate(t[3])
     repGrammar.append(t.slice)
 
 

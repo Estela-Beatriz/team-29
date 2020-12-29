@@ -154,7 +154,6 @@ class Select(Instruction):
             else:
                 value = [newEnv.dataFrame[p] for p in newEnv.dataFrame]
                 labels = [p for p in newEnv.dataFrame]
-            print("pito")
             if value != []:
                 if self.wherecl == None:
                     df_ = newEnv.dataFrame.filter(labels)
