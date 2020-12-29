@@ -43,7 +43,7 @@ precedence = (
 import analizer.abstract.expression as exp
 import analizer.modules.expressions as expression
 import analizer.abstract.instruction as instruction
-
+import analizer.modules.instructions as instruction2
 
 def p_init(t):
     """init : stmtList"""
@@ -1617,7 +1617,7 @@ def p_offsetLimit_n(t):
 def p_insertStmt(t):
     """insertStmt : R_INSERT R_INTO ID paramsColumn R_VALUES S_PARIZQ paramsList S_PARDER"""
 
-    t[0] = instruction.InsertInto(t[3], t[4], t[7])
+    t[0] = instruction2.InsertInto(t[3], t[4], t[7])
     repGrammar.append(t.slice)
 
 
@@ -1646,7 +1646,7 @@ def p_updateStmt(t):
     fc = instruction.FromClause(
         [t[2][0]], [t[2][1]], t.slice[1].lineno, t.slice[1].lexpos
     )
-    t[0] = instruction.Update(fc, t[4], t[5], t.slice[1].lineno, t.slice[1].lexpos)
+    t[0] = instruction2.Update(fc, t[4], t[5], t.slice[1].lineno, t.slice[1].lexpos)
 
     repGrammar.append(t.slice)
 
@@ -1688,7 +1688,7 @@ def p_updateExp(t):
 
 def p_deleteStmt(t):
     """deleteStmt : R_DELETE fromCl whereCl"""
-    t[0] = instruction.Delete(t[2], t[3], t.slice[1].lineno, t.slice[1].lexpos)
+    t[0] = instruction2.Delete(t[2], t[3], t.slice[1].lineno, t.slice[1].lexpos)
     repGrammar.append(t.slice)
 
 
