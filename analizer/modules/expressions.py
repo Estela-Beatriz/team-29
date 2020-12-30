@@ -1,25 +1,25 @@
 # Tipos de datos primitivos
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 
 # Identificadores
-from analizer.expressions import identifiers
+from analizer.statement.expressions import identifiers
 
 # Operaciones unarias
-from analizer.operations.unary import arithmetic as UnaryArithmetic
-from analizer.operations.unary import relational as UnaryRelational
-from analizer.operations.unary import logical as UnaryLogical
+from analizer.statement.operations.unary import arithmetic as UnaryArithmetic
+from analizer.statement.operations.unary import relational as UnaryRelational
+from analizer.statement.operations.unary import logical as UnaryLogical
 
 # Operaciones binarias
-from analizer.operations.binary import arithmetic as BinaryArithmetic
-from analizer.operations.binary import logical as BinaryLogical
-from analizer.operations.binary import relational as BinaryRelational
-from analizer.operations.binary import string as BinaryString
+from analizer.statement.operations.binary import arithmetic as BinaryArithmetic
+from analizer.statement.operations.binary import logical as BinaryLogical
+from analizer.statement.operations.binary import relational as BinaryRelational
+from analizer.statement.operations.binary import string as BinaryString
 
 # Operaciones ternarias
-from analizer.operations.ternary import relational as TernaryRelational
+from analizer.statement.operations.ternary import relational as TernaryRelational
 
 # Funcion Extract
-from analizer.functions import extract
+from analizer.statement.functions import extract
 
 
 def Primitive(type_, value, temp, row, column):

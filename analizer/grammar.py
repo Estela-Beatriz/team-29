@@ -40,10 +40,11 @@ precedence = (
 
 # Definición de la gramática
 
-import analizer.abstract.expression as exp
+from analizer.abstract.expression import TYPE
 import analizer.modules.expressions as expression
 import analizer.abstract.instruction as instruction
 import analizer.modules.instructions as instruction2
+
 
 def p_init(t):
     """init : stmtList"""
@@ -81,7 +82,7 @@ def p_stmt(t):
     """
     listInst.append(t[1].dot())
     try:
-        t[0] = t[1]
+        t[0] = t[1].execute(None)
     except:
         return
     repGrammar.append(t.slice)
@@ -662,18 +663,17 @@ def p_literal(t):
     | R_NULL
     """
     if t.slice[1].type == "CHARACTER" or t.slice[1].type == "STRING":
-        tipo = exp.TYPE.STRING
+        tipo = TYPE.STRING
     elif t.slice[1].type == "R_TRUE" or t.slice[1].type == "R_FALSE":
         t.slice[1].value = t.slice[1].value == "TRUE"
-        tipo = exp.TYPE.BOOLEAN
+        tipo = TYPE.BOOLEAN
     elif t.slice[1].type == "R_NULL":
-        tipo = exp.TYPE.NULL
+        tipo = TYPE.NULL
     else:
-        tipo = exp.TYPE.NUMBER
+        tipo = TYPE.NUMBER
     t[0] = expression.Primitive(
         tipo, t.slice[1].value, t.slice[1].value, t.slice[1].lineno, t.slice[1].lexpos
     )
-
     repGrammar.append(t.slice)
 
 
@@ -1031,8 +1031,6 @@ def p_booleanCheck_1(t):
     | idOrLiteral S_IGUAL idOrLiteral
     | idOrLiteral OL_DISTINTODE idOrLiteral
     """
-
-    # t[0] = instruction.CheckOperation(t[1], t[3], t[2], t[1].row, t[1].column)
     t[0] = [t[1].value, t[3].value, t[2], t[1].type, t[3].type]
     repGrammar.append(t.slice)
 
@@ -1800,7 +1798,6 @@ def parse(input):
         expression.list_errors = list()
         instruction.syntaxPostgreSQL = list()
         instruction.semanticErrors = list()
-        instruction.syntaxErrors = list()
         lexer.lineno = 1
         result = parser.parse(input)
         return result

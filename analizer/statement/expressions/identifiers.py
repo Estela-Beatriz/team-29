@@ -1,8 +1,8 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, list_errors
 from analizer.reports import Nodo
 
 
-class Identifiers(exp.Expression):
+class Identifiers(Expression):
     """
     Esta clase representa los nombre de columnas
     """
@@ -30,7 +30,7 @@ class Identifiers(exp.Expression):
                 else:
                     x = environment.getVar(self.name)
                     if not x:
-                        exp.list_errors.append(
+                        list_errors.append(
                             "Error: 42703: columna  "
                             + str(self.name)
                             + " no existe \n En la linea: "

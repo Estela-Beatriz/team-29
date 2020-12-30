@@ -1,10 +1,10 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 import pandas as pd
 
 
-class Logical(exp.Expression):
+class Logical(Expression):
     """
     Esta clase contiene las expresiones booleanas binarias.
     """
@@ -21,7 +21,7 @@ class Logical(exp.Expression):
         exp2 = self.exp2.execute(environment)
         operator = self.operator
         try:
-            if exp1.type != exp.TYPE.BOOLEAN or exp2.type != exp.TYPE.BOOLEAN:
+            if exp1.type != TYPE.BOOLEAN or exp2.type != TYPE.BOOLEAN:
                 raise Exception
             if isinstance(exp1.value, pd.core.series.Series) or isinstance(
                 exp2.value, pd.core.series.Series
@@ -40,10 +40,10 @@ class Logical(exp.Expression):
                 else:
                     raise Exception
             return primitive.Primitive(
-                exp.TYPE.BOOLEAN, value, self.temp, self.row, self.column
+                TYPE.BOOLEAN, value, self.temp, self.row, self.column
             )
         except:
-            exp.list_errors.append(
+            list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
                 + str(exp1.type)
                 + " "

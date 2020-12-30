@@ -1,8 +1,8 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, list_errors
 from analizer.reports import Nodo
 
 
-class Primitive(exp.Expression):
+class Primitive(Expression):
     """
     Esta clase contiene los tipos primitivos
     de datos como STRING, NUMBER, BOOLEAN

@@ -1,10 +1,10 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 import pandas as pd
 
 
-class String(exp.Expression):
+class String(Expression):
     """
     Esta clase recibe dos parametros de expresion
     para realizar operaciones entre ellas
@@ -22,8 +22,8 @@ class String(exp.Expression):
             exp1 = self.exp1.execute(environment)
             exp2 = self.exp2.execute(environment)
             operator = self.operator
-            if exp1.type != exp.TYPE.STRING and exp2.type != exp.TYPE.STRING:
-                exp.list_errors.append(
+            if exp1.type != TYPE.STRING and exp2.type != TYPE.STRING:
+                list_errors.append(
                     "Error: 42883: la operacion no existe entre: "
                     + str(exp1.type)
                     + " "
@@ -45,7 +45,7 @@ class String(exp.Expression):
             if operator == "||":
                 value = exp1.value + exp2.value
             else:
-                exp.list_errors.append(
+                list_errors.append(
                     "Error: 42725: el operador no es unico: "
                     + str(exp1.type)
                     + " "
@@ -57,10 +57,10 @@ class String(exp.Expression):
                 )
                 raise Exception
             return primitive.Primitive(
-                exp.TYPE.STRING, value, self.temp, self.row, self.column
+                TYPE.STRING, value, self.temp, self.row, self.column
             )
         except:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: XX000: Error interno (Binary String Operation)"
                 + "\n En la linea: "
                 + str(self.row)

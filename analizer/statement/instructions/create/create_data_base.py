@@ -3,6 +3,7 @@ from analizer.typechecker.Metadata import Struct
 from analizer.reports import Nodo
 from storage.storageManager import jsonMode
 
+
 class CreateDatabase(inst.Instruction):
     """
     Clase que representa la instruccion CREATE DATABASE
@@ -66,5 +67,4 @@ class CreateDatabase(inst.Instruction):
             mod2 = Nodo.Nodo(str(self.mode))
             mod.addNode(mod2)
             new.addNode(mod)
-
         return new
