@@ -8,6 +8,9 @@ from analizer.statement.expressions import identifiers
 from analizer.statement.operations.unary import arithmetic as UnaryArithmetic
 from analizer.statement.operations.unary import relational as UnaryRelational
 from analizer.statement.operations.unary import logical as UnaryLogical
+from analizer.statement.operations.unary import error as UnaryError
+from analizer.statement.operations.unary import existRelational
+from analizer.statement.operations.unary import inRelational
 
 # Operaciones binarias
 from analizer.statement.operations.binary import arithmetic as BinaryArithmetic
@@ -20,6 +23,14 @@ from analizer.statement.operations.ternary import relational as TernaryRelationa
 
 # Funcion Extract
 from analizer.statement.functions import extract
+from analizer.statement.functions import call
+from analizer.statement.functions import aggregate
+from analizer.statement.functions import check
+from analizer.statement.functions import current
+from analizer.statement.functions import part
+
+
+from analizer.statement.expressions import tablle_all
 
 
 def Primitive(type_, value, temp, row, column):
@@ -68,3 +79,35 @@ def ExtractDate(opt, type_, str, row, column):
 
 def ExtractColumnDate(opt, colData, row, column):
     return extract.ExtractColumnDate(opt, colData, row, column)
+
+
+def FunctionCall(function, params, row, column):
+    return call.FunctionCall(function, params, row, column)
+
+
+def AggregateFunction(func, colData, row, column):
+    return aggregate.AggregateFunction(func, colData, row, column)
+
+
+def DatePart(opt, type, str, row, column):
+    return part.DatePart(opt, type, str, row, column)
+
+
+def Current(val, optStr, row, column):
+    return current.Current(val, optStr, row, column)
+
+
+def ExistsRelationalOperation(subquery, row, column):
+    return existRelational.ExistsRelationalOperation(subquery, row, column)
+
+
+def InRelationalOperation(colData, optNot, subquery, row, column):
+    return inRelational.InRelationalOperation(colData, optNot, subquery, row, column)
+
+
+def CheckValue(value, type_, row, column):
+    return check.CheckValue(value, type_, row, column)
+
+
+def TableAll( table, row, column):
+    return tablle_all.TableAll( table, row, column)

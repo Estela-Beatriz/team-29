@@ -41,6 +41,7 @@ precedence = (
 # Definición de la gramática
 
 from analizer.abstract.expression import TYPE
+from analizer.abstract.expression import returnExpErrors
 import analizer.modules.expressions as expression
 import analizer.abstract.instruction as instruction
 import analizer.modules.instructions as instruction2
@@ -1040,7 +1041,7 @@ def p_booleanCheck_2(t):
     booleanCheck : idOrLiteral R_IS R_DISTINCT R_FROM idOrLiteral
     """
 
-    t[0] = instruction.CheckOperation(
+    t[0] = instruction2.CheckOperation(
         t[1], t[5], t[2] + t[3] + t[4], t[1].row, t[1].column
     )
     t[0].execute(0)
@@ -1052,7 +1053,7 @@ def p_booleanCheck_3(t):
     booleanCheck : idOrLiteral R_IS R_NOT R_DISTINCT R_FROM idOrLiteral
     """
 
-    t[0] = expression.CheckOperation(
+    t[0] = instruction2.CheckOperation(
         t[1], t[6], t[2] + t[3] + t[4] + t[5], t[1].row, t[1].column
     )
     repGrammar.append(t.slice)
@@ -1664,7 +1665,7 @@ def p_updateCols_u(t):
 
 def p_updateVals(t):
     """updateVals : ID S_IGUAL updateExp"""
-    t[0] = instruction.Assignment(t[1], t[3], t.slice[1].lineno, t.slice[1].lexpos)
+    t[0] = instruction2.Assignment(t[1], t[3], t.slice[1].lineno, t.slice[1].lexpos)
 
     repGrammar.append(t.slice)
 
@@ -1757,7 +1758,7 @@ def returnSyntacticErrors():
 
 
 def returnPostgreSQLErrors():
-    errors = expression.returnExpErrors()
+    errors = returnExpErrors()
     errors += PostgreSQL
     errors += instruction.returnErrors()
     return errors

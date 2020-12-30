@@ -9,7 +9,7 @@ from analizer.statement.instructions.create import create_table
 from analizer.statement.instructions.create import create_type
 from analizer.statement.instructions.alter import alter_data_base
 from analizer.statement.instructions.alter import alter_table
-
+from analizer.statement.instructions import assignment
 
 def Delete(fromcl, wherecl, row, column):
     return delete.Delete(fromcl, wherecl, row, column)
@@ -53,3 +53,11 @@ def AlterTable(table, params=[]):
 
 def showDataBases(like):
     return show.showDataBases(like)
+
+    
+def Assignment(id, value, row, column):
+    return assignment.Assignment(id, value, row, column)
+
+
+def CheckOperation(exp1, exp2, operator, row, column):
+    return assignment.CheckOperation(exp1, exp2, operator, row, column)
