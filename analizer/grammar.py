@@ -147,7 +147,7 @@ def p_createopts_type(t):
     """
     createOpts : R_TYPE ifNotExists ID R_AS R_ENUM S_PARIZQ paramsList S_PARDER
     """
-    t[0] = instruction.CreateType(t[2], t[3], t[7])
+    t[0] = instruction2.CreateType(t[2], t[3], t[7])
     repGrammar.append(t.slice)
 
 
@@ -1101,9 +1101,9 @@ def p_alterStmt(t):
     | R_ALTER R_TABLE idOrString alterTableList
     """
     if t[2] == "DATABASE":
-        t[0] = instruction.AlterDataBase(t[4][0], t[3], t[4][1])
+        t[0] = instruction2.AlterDataBase(t[4][0], t[3], t[4][1])
     else:
-        t[0] = instruction.AlterTable(t[3], t[4])
+        t[0] = instruction2.AlterTable(t[3], t[4])
     repGrammar.append(t.slice)
 
 
@@ -1708,7 +1708,7 @@ def p_tableOpt(t):
 def p_showStmt(t):
     """showStmt : R_SHOW R_DATABASES likeOpt"""
 
-    t[0] = instruction.showDataBases(t[3])
+    t[0] = instruction2.showDataBases(t[3])
     repGrammar.append(t.slice)
 
 
