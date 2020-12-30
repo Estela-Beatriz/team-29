@@ -1,9 +1,9 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 
 
-class Arithmetic(exp.Expression):
+class Arithmetic(Expression):
     """
     Esta clase recibe dos parametros de expresion
     para realizar operaciones entre ellas
@@ -21,7 +21,7 @@ class Arithmetic(exp.Expression):
         exp2 = self.exp2.execute(environment)
         operator = self.operator
         try:
-            if exp1.type != exp.TYPE.NUMBER or exp2.type != exp.TYPE.NUMBER:
+            if exp1.type != TYPE.NUMBER or exp2.type != TYPE.NUMBER:
                 raise TypeError
             if operator == "+":
                 value = exp1.value + exp2.value
@@ -31,9 +31,7 @@ class Arithmetic(exp.Expression):
                 value = exp1.value * exp2.value
             elif operator == "/":
                 if exp2.value == 0:
-                    exp.list_errors.append(
-                        "Error: 22012: No se puede dividir  por cero"
-                    )
+                    list_errors.append("Error: 22012: No se puede dividir  por cero")
                     value = 0
                 else:
                     value = exp1.value / exp2.value
@@ -41,17 +39,17 @@ class Arithmetic(exp.Expression):
                 value = exp1.value ** exp2.value
             elif operator == "%":
                 if exp2.value == 0:
-                    exp.list_errors.append("Error: 22012: No se puede modular por cero")
+                    list_errors.append("Error: 22012: No se puede modular por cero")
                     value = 0
                 else:
                     value = exp1.value % exp2.value
             else:
                 raise TypeError
             return primitive.Primitive(
-                exp.TYPE.NUMBER, value, self.temp, self.row, self.column
+                TYPE.NUMBER, value, self.temp, self.row, self.column
             )
         except TypeError:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
                 + str(exp1.type)
                 + " "
@@ -62,7 +60,7 @@ class Arithmetic(exp.Expression):
                 + str(self.row)
             )
         except:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: XX000: Error interno (Binary Aritmethic Operation)"
                 + "\n En la linea: "
                 + str(self.row)

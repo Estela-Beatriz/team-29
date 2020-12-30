@@ -1,9 +1,9 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors, comps
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 
 
-class Relational(exp.Expression):
+class Relational(Expression):
     """
     Esta clase contiene las expresiones unarias de comparacion
     que devuelven un booleano.
@@ -13,10 +13,10 @@ class Relational(exp.Expression):
         super().__init__(row, column)
         self.exp = exp
         self.operator = operator
-        self.temp = exp.temp + " " + exp.comps.get(operator)
+        self.temp = exp.temp + " " + comps.get(operator)
 
     def execute(self, environment):
-        exp = self.exp.execute(environment)
+        exp = self.execute(environment)
         operator = self.operator
         try:
             if operator == "ISNULL":
@@ -40,12 +40,12 @@ class Relational(exp.Expression):
             else:
                 raise TypeError
             return primitive.Primitive(
-                exp.TYPE.BOOLEAN, value, self.temp, self.row, self.column
+                TYPE.BOOLEAN, value, self.temp, self.row, self.column
             )
         except TypeError:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
-                + str(exp.type)
+                + str(type)
                 + " "
                 + str(operator)
                 + " "
@@ -53,7 +53,7 @@ class Relational(exp.Expression):
                 + str(self.row)
             )
         except:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: XX000: Error interno (Unary Relational Operation)"
                 + "\n En la linea: "
                 + str(self.row)

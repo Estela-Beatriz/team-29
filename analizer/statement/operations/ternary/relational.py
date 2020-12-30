@@ -1,10 +1,10 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors, comps
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 import pandas as pd
 
 
-class Relational(exp.Expression):
+class Relational(Expression):
     """
     Esta clase contiene las expresiones ternarias de comparacion
     que devuelven un booleano.
@@ -19,7 +19,7 @@ class Relational(exp.Expression):
         self.temp = (
             exp1.temp
             + " "
-            + exp.comps.get(operator)
+            + comps.get(operator)
             + " "
             + self.exp2.temp
             + " AND "
@@ -46,7 +46,7 @@ class Relational(exp.Expression):
                     t2 = (exp1.value < exp2.value) & (exp1.value > exp3.value)
                     value = t1 | t2
                 else:
-                    exp.list_errors.append(
+                    list_errors.append(
                         "Error: 42601: Error sintactico: "
                         + "\n En la linea: "
                         + str(self.row)
@@ -62,17 +62,17 @@ class Relational(exp.Expression):
                     t2 = exp1.value < exp2.value and exp1.value > exp3.value
                     value = t1 or t2
                 else:
-                    exp.list_errors.append(
+                    list_errors.append(
                         "Error: 42601: Error sintactico: "
                         + "\n En la linea: "
                         + str(self.row)
                     )
                     return AssertionError
             return primitive.Primitive(
-                exp.TYPE.BOOLEAN, value, self.temp, self.row, self.column
+                TYPE.BOOLEAN, value, self.temp, self.row, self.column
             )
         except TypeError:
-            exp.list_errors.append(
+            list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
                 + str(exp1.type)
                 + " "
@@ -86,7 +86,7 @@ class Relational(exp.Expression):
             )
             return AssertionError
         except:
-            exp.list_errors.append(
+            list_errors.append(
                 "Error: XX000: Error interno (Ternary Relational Operation)"
                 + "\n En la linea: "
                 + str(self.row)

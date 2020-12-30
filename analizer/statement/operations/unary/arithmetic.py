@@ -1,9 +1,9 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 
 
-class Arithmetic(exp.Expression):
+class Arithmetic(Expression):
     """
     Esta clase recibe un parametro de expresion
     para realizar operaciones unarias
@@ -16,14 +16,14 @@ class Arithmetic(exp.Expression):
         self.temp = str(operator) + exp.temp
 
     def execute(self, environment):
-        exp = self.exp.execute(environment)
+        exp = self.execute(environment)
         operator = self.operator
-        if exp.type != exp.TYPE.NUMBER:
-            exp.list_errors.append(
+        if type != TYPE.NUMBER:
+            list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
                 + str(operator)
                 + " "
-                + str(exp.type)
+                + str(type)
                 + "\n En la linea: "
                 + str(self.row)
             )
@@ -33,21 +33,19 @@ class Arithmetic(exp.Expression):
         elif operator == "-":
             value = exp.value * -1
         else:
-            exp.list_errors.append(
+            list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
                 + str(operator)
                 + " "
-                + str(exp.type)
+                + str(type)
                 + "\n En la linea: "
                 + str(self.row)
             )
             raise Exception
-        return primitive.Primitive(
-            exp.TYPE.NUMBER, value, self.temp, self.row, self.column
-        )
+        return primitive.Primitive(TYPE.NUMBER, value, self.temp, self.row, self.column)
 
     def dot(self):
-        n1 = self.exp.dot()
+        n1 = self.dot()
         new = Nodo.Nodo(self.operator)
         new.addNode(n1)
         return new

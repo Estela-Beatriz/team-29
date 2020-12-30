@@ -1,9 +1,9 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 
 
-class Relational(exp.Expression):
+class Relational(Expression):
     """
     Esta clase contiene las expresiones binarias de comparacion
     que devuelven un booleano.
@@ -40,7 +40,7 @@ class Relational(exp.Expression):
             elif operator == "ISNOTDISTINCTFROM":
                 value = exp1.value == exp2.value
             else:
-                exp.list_errors.append(
+                list_errors.append(
                     "Error: 22P02: entrada invalida: "
                     + str(exp1.type)
                     + " "
@@ -52,10 +52,10 @@ class Relational(exp.Expression):
                 )
                 raise Exception
             return primitive.Primitive(
-                exp.TYPE.BOOLEAN, value, self.temp, self.row, self.column
+                TYPE.BOOLEAN, value, self.temp, self.row, self.column
             )
         except TypeError:
-            exp.list_errors.append(
+            list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
                 + str(exp1.type)
                 + " "
@@ -67,7 +67,7 @@ class Relational(exp.Expression):
             )
             raise Exception
         except:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: XX000: Error interno (Binary Relational Operation)"
                 + "\n En la linea: "
                 + str(self.row)

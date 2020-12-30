@@ -1,10 +1,10 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression, TYPE, list_errors, comps
 from analizer.reports import Nodo
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 import pandas as pd
 
 
-class Logical(exp.Expression):
+class Logical(Expression):
     """
     Esta clase contiene las expresiones booleanas unarias.
     """
@@ -16,13 +16,13 @@ class Logical(exp.Expression):
         if operator == "NOT":
             self.temp = str(operator) + " " + exp.temp
         else:
-            self.temp = exp.temp + " " + exp.comps.get(operator)
+            self.temp = exp.temp + " " + comps.get(operator)
 
     def execute(self, environment):
-        exp = self.exp.execute(environment)
+        exp = self.execute(environment)
         operator = self.operator
         try:
-            if exp.type != exp.TYPE.BOOLEAN:
+            if type != TYPE.BOOLEAN:
                 raise TypeError
             if isinstance(exp.value, pd.core.series.Series):
                 if operator == "NOT":
@@ -59,26 +59,26 @@ class Logical(exp.Expression):
                 else:
                     raise TypeError
             return primitive.Primitive(
-                exp.TYPE.BOOLEAN, value, self.temp, self.row, self.column
+                TYPE.BOOLEAN, value, self.temp, self.row, self.column
             )
         except TypeError:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: 42883: la operacion no existe entre: "
-                + str(exp.type)
+                + str(type)
                 + " y el operador "
                 + str(operator)
                 + "\n En la linea: "
                 + str(self.row)
             )
         except:
-            raise exp.list_errors.append(
+            raise list_errors.append(
                 "Error: XX000: Error interno (Binary Aritmethic Operation)"
                 + "\n En la linea: "
                 + str(self.row)
             )
 
     def dot(self):
-        n1 = self.exp.dot()
+        n1 = self.dot()
         new = Nodo.Nodo(self.operator)
         new.addNode(n1)
         return new

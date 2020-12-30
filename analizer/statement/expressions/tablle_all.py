@@ -1,8 +1,9 @@
-from analizer.abstract import expression as exp
+from analizer.abstract.expression import Expression
+from analizer.statement.expressions.identifiers import Identifiers
 from analizer.reports import Nodo
 
 
-class TableAll(exp.Expression):
+class TableAll(Expression):
     """
     Esta clase representa una tabla.*
     """
@@ -20,7 +21,7 @@ class TableAll(exp.Expression):
                 for p in env.dataFrame:
                     temp = p.split(".")
                     if temp[0] == table:
-                        identifier = exp.Identifiers(
+                        identifier = Identifiers(
                             self.table, temp[1], self.row, self.column
                         )
                         lst.append(identifier)

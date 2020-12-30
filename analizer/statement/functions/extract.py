@@ -1,7 +1,7 @@
 from analizer.abstract import expression as exp
 from analizer.reports import Nodo
 from datetime import datetime
-from analizer.expressions import primitive
+from analizer.statement.expressions import primitive
 import pandas as pd
 
 
